@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
 
 </LinearLayout>

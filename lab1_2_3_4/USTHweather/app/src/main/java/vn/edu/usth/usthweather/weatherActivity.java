@@ -1,11 +1,19 @@
 package vn.edu.usth.usthweather;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class weatherActivity extends AppCompatActivity {
 
@@ -13,9 +21,13 @@ public class weatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        //ForecastFragment ff = ForecastFragment.newInstance("","");
-        //getSupportFragmentManager().beginTransaction().add(
-                //R.id.container, ff).commit();
+
+
+        PagerAdapter adapter = new HomeFragmentPagerAdapter(
+                getSupportFragmentManager());
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager.setOffscreenPageLimit(3);
+        pager.setAdapter(adapter);
         Log.i("Weather", "onCreate() called");
 
        // ForecastFragment ff = new ForecastFragment();
@@ -59,4 +71,54 @@ public class weatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState, persistentState);
         Log.i( "Weather", "onCreate() called");
     }
-}
+
+
+
+    //@Override
+    //public boolean onCreateOptionsMenu(Menu menu) {
+      //  getMenuInflater().ìnflate(R.menu.main_menu, menu);
+        //return true;
+
+ }
+
+    //@Override
+    //public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+      //  if (item.getItemId() == R.id.search) {
+        //    Log.i("Weather","Menu search Clicked");
+          //  return true;
+        //}
+        //return super.onOptionsItemSelected(item);
+    //}
+
+    class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
+        private final int PAGE_COUNT = 3;
+        private String titles[] = new String[] { "Hanoi", "Paris", "Toulouse" };
+        public HomeFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public int getCount() {
+            return PAGE_COUNT; // number of pages for a ViewPager
+        }
+        @Override
+        public Fragment getItem(int page) {
+
+            switch (page) {
+                case 0:
+                    return new WeatherForecastFragment();
+                case 1:
+                    return new WeatherForecastFragment();
+                case 2:
+                    return new WeatherForecastFragment();
+            }
+            return new Fragment();
+        }
+        @Override
+        public CharSequence getPageTitle(int page) {
+// returns a tab title corresponding to the specified page
+            return titles[page];
+        }
+    }
+
+
+
